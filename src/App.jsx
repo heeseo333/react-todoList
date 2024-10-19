@@ -6,6 +6,8 @@ import TodoList from "./components/TodoList";
 import { useState } from "react";
 function App() {
   const [todos, setTodos] = useState(["GO TO THE GYM", "WALK THE DOG"]);
+  const [editIndex, setEditIndex] = useState();
+  const [editValue, setEditValue] = useState("");
 
   function handleAddTodos(newTodo) {
     const newTodoList = [...todos, newTodo];
@@ -19,12 +21,29 @@ function App() {
     setTodos(newTodoList);
   }
 
-  function handleEditTodos(Selectedindex) {}
+  function handleEditTodos(index) {
+    setEditIndex(index);
+    setEditValue(todos[index]);
+  }
+
+  function handleSaveEdit() {
+    const updatedTodos = todos.map((todo, index) =>
+      index === editIndex ? editValue : todo
+    );
+    setTodos(updatedTodos);
+    setEditIndex(null);
+  }
 
   return (
     <main>
       <TodoInput handleAddTodos={handleAddTodos} />
-      <TodoList handleDeleteTodos={handleDeleteTodos} todos={todos} />
+      <TodoList
+        handleDeleteTodos={handleDeleteTodos}
+        handleEditTodos={handleEditTodos}
+        handleSaveEdit={handleSaveEdit}
+        editIndex={editIndex}
+        todos={todos}
+      />
     </main>
   );
 }

@@ -1,14 +1,35 @@
 import React from "react";
 
 export default function TodoCard(props) {
-  const { children, handleDeleteTodos, index } = props;
+  const {
+    editIndex,
+    children,
+    handleDeleteTodos,
+    index,
+    handleEditTodos,
+    setEditValue,
+    handleSaveEdit,
+  } = props;
+  const isEditing = index == editIndex;
   return (
     <li className="todoItem">
-      {children}
+      {isEditing ? (
+        <div>
+          <input type="text" onChange={(e) => setEditValue(e.target.value)} />
+          <button onClick={handleSaveEdit}>save</button>
+        </div>
+      ) : (
+        <span>{children}</span>
+      )}{" "}
       <div className="actionsContainer">
-        <button>
+        <button
+          onClick={(e) => {
+            handleEditTodos(index);
+          }}
+        >
           <i className="fa-solid fa-pen-to-square"></i>
         </button>
+
         <button
           onClick={() => {
             handleDeleteTodos(index);
