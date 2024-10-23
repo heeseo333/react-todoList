@@ -7,7 +7,6 @@ import { useState } from "react";
 function App() {
   const [todos, setTodos] = useState(["GO TO THE GYM", "WALK THE DOG"]);
   const [editIndex, setEditIndex] = useState();
-  const [editValue, setEditValue] = useState("");
 
   function handleAddTodos(newTodo) {
     const newTodoList = [...todos, newTodo];
@@ -23,13 +22,13 @@ function App() {
 
   function handleEditTodos(index) {
     setEditIndex(index);
-    setEditValue(todos[index]);
   }
 
-  function handleSaveEdit() {
+  function handleSaveEdit(editInput) {
     const updatedTodos = todos.map((todo, index) =>
-      index === editIndex ? editValue : todo
+      index === editIndex ? editInput : todo
     );
+
     setTodos(updatedTodos);
     setEditIndex(null);
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function TodoCard(props) {
   const {
@@ -7,16 +7,27 @@ export default function TodoCard(props) {
     handleDeleteTodos,
     index,
     handleEditTodos,
-    setEditValue,
+    todo,
     handleSaveEdit,
   } = props;
   const isEditing = index == editIndex;
+  const [editValue, setEditValue] = useState(todo);
   return (
     <li className="todoItem">
       {isEditing ? (
         <div>
-          <input type="text" onChange={(e) => setEditValue(e.target.value)} />
-          <button onClick={handleSaveEdit}>save</button>
+          <input
+            value={editValue}
+            type="text"
+            onChange={(e) => setEditValue(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              handleSaveEdit(editValue);
+            }}
+          >
+            save
+          </button>
         </div>
       ) : (
         <span>{children}</span>
